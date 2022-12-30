@@ -1,0 +1,23 @@
+{
+  "products": [
+    { "id": 1, "name": "Banana", "price": 10.0, "available": 10 },
+    { "id": 2, "name": "Apple", "price": 20.0, "available": 15 },
+    { "id": 3, "name": "Orange", "price": 30.0, "available": 8 },
+    { "id": 4, "name": "Mango", "price": 15.0, "available": 11 },
+    { "id": 5, "name": "Passion fruit", "price": 25.0, "available": 29 },
+    { "id": 6, "name": "Watermelon", "price": 55.0, "available": 40 },
+    { "id": 7, "name": "Peach", "price": 75.0, "available": 5 },
+    { "id": 8, "name": "Strawberry", "price": 95.0, "available": 2 }
+  ],
+  "vouchers": [
+    { "id": 1, "code": "#30OFF", "type": "percentual", "amount": 30.0 },
+    { "id": 2, "code": "#100DOLLARS", "type": "fixed", "amount": 100.0 },
+    {
+      "id": 3,
+      "code": "#SHIPIT",
+      "type": "shipping",
+      "amount": 0,
+      "minValue": 300.5
+    }
+  ]
+}
