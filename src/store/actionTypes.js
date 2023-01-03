@@ -1,3 +1,3 @@
 export const actionTypes = {
-  increment: "counter/increment",
+  addToCart: "cart/addToCart",
 };

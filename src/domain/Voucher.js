@@ -1,21 +1,23 @@
-const percentDiscount = (value) => value;
-const fixedDiscount = (value) => value;
-const shippingDiscount = (value) => 0;
+import { _calculateShipping, _calculateSubtotal } from "./Cart";
+
+const percentDiscount = (amount, cart) => {
+  return (amount / 100) * _calculateSubtotal(cart);
+};
+
+const shippingDiscount = (voucher, cart) => {
+  const subtotal = _calculateSubtotal(cart);
+  if (subtotal >= voucher.minValue) return _calculateShipping(cart);
+};
 
 const Voucher = {
-  calculateDiscount: (voucher = "") => {
-    const discountValue = /#(\d+).+/.exec(voucher)[1];
-
-    switch (voucher) {
-      case voucher.match(/OFF/):
-        return percentDiscount(discountValue);
-
-      case voucher.match(/DOLLARS/):
-        return fixedDiscount(voucher);
-
-      case voucher.match(/SHIPIT/):
-        return shippingDiscount();
-
+  calcDiscount: (cart) => {
+    switch (cart.voucher.type) {
+      case "percentual":
+        return percentDiscount(cart.voucher.amount, cart);
+      case "fixed":
+        return cart.voucher.amount;
+      case "shipping":
+        return shippingDiscount(cart.voucher, cart);
       default:
         return 0;
     }
