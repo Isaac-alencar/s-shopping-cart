@@ -3,32 +3,29 @@ import { Voucher } from "./Voucher";
 const Cart = {
   create: (props = {}) => ({
     items: props.items || [],
-    subtotal: _calculateSubtotal(props.items),
-    shippingCost: _calculateShipping(props.items),
-    discount: _calculateDiscount(props.items),
-    total: _calculateTotal(),
+    voucher: props.voucher,
   }),
-  addToCart:
-    (cart) =>
-    (inlineProduct = {}) => {
-      return [cart.items, ...inlineProduct];
-    },
-  removeFromCart:
-    (cart) =>
-    (inlineProduct = {}) => {
-      return cart.items.filter((item) => item.id !== inlineProduct.id);
-    },
 };
 
-function _calculateSubtotal(cartItems = []) {
-  return cartItems.reduce((prev, curr) => prev + curr.price, 0);
-}
+export const addToCart = (cart) => (product) => {
+  const updatedItems = [...cart.items, product];
+  return { ...cart, items: updatedItems };
+};
 
-function _calculateShipping(cartItems = []) {
+export const removeFromCart = (cart) => (product) => {
+  const newCartItems = cart.items.filter((item) => item.id !== product.id);
+  return { ...cart, items: newCartItems };
+};
+
+export const calculateSubtotal = (cart) => {
+  return cart.items.reduce((prev, curr) => prev + curr.price, 0);
+};
+
+export const calculateShipping = (cart) => {
   const shipping = { value: 0 };
   const STANDARD_KILOS_SHIP = 10
 
-  const totalKgPerOrder = cartItems.reduce(
+  const totalKgPerOrder = cart.items.reduce(
     (prev, curr) => prev + curr.quantity,
     0
   );
@@ -43,7 +40,7 @@ function _calculateShipping(cartItems = []) {
     return value;
   };
 
-  if (_calculateSubtotal(cartItems) > 400) {
+  if (calculateSubtotal(cart.items) > 400) {
     return shipping.value;
   }
 
@@ -53,14 +50,12 @@ function _calculateShipping(cartItems = []) {
   } else {
     aboveTenKilosShipping();
   }
-}
+};
 
-function _calculateDiscount (voucher) {
-  return Voucher.calculateDiscount(voucher);
-}
+export const calcDiscount = (cart) => Voucher.calcDiscount(cart);
 
-function _calculateTotal (cart) {
-  return  cart.subtotal + cart.shippingCost - cart.discount 
-}
+export const _calculateTotal = (cart) => {
+  return cart.subtotal + cart.shippingCost - cart.discount;
+};
 
 export { Cart };

@@ -1,32 +1,50 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createSlice } from "@reduxjs/toolkit";
-import { counterSelector } from "../selectors";
+import {
+  addToCart,
+  removeFromCart,
+  applyDiscount,
+  calculateShipping,
+  calculateSubtotal,
+} from "../../domain/Cart";
+import { cartSelectors } from "../selectors";
 
 const initialState = {
-  value: 0,
+  items: [],
+  voucher: {},
 };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    add: (state, action) => {
+      addToCart(state)(action.payload);
+    },
+    remove: (state, action) => {
+      removeFromCart(state)(action.payload);
     },
   },
 });
 
-export const useCounter = () => {
+export const useCart = () => {
   const dispatch = useDispatch();
+  const cart = useSelector(cartSelectors);
 
-  const { increment } = counterSlice.actions;
+  const { add, remove } = cartSlice.actions;
+
+  const subtotal = calculateSubtotal(cart);
+  const shippingValue = calculateShipping(cart);
+  const discount = applyDiscount(cart);
 
   return {
-    counter: useSelector(counterSelector),
-    increment: () => dispatch(increment()),
+    cart,
+    subtotal,
+    shippingValue,
+    discount,
+    addToCart: () => dispatch(add()),
+    removeFromCart: () => dispatch(remove()),
   };
 };
 
-export const { increment } = counterSlice.actions;
-
-export default counterSlice.reducer;
+export default cartSlice.reducer;
