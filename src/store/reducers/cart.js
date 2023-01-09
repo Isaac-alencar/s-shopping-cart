@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createSlice } from "@reduxjs/toolkit";
+
 import {
   addToCart,
   removeFromCart,
-  applyDiscount,
   calculateShipping,
   calculateSubtotal,
 } from "../../domain/Cart";
+import { Voucher } from "../../domain/Voucher";
+
 import { cartSelectors } from "../selectors";
 
 const initialState = {
@@ -35,7 +37,7 @@ export const useCart = () => {
 
   const subtotal = calculateSubtotal(cart);
   const shippingValue = calculateShipping(cart);
-  const discount = applyDiscount(cart);
+  const discount = Voucher.calcDiscount(cart);
 
   return {
     cart,

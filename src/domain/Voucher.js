@@ -1,12 +1,12 @@
-import { _calculateShipping, _calculateSubtotal } from "./Cart";
+import { calculateShipping, calculateSubtotal } from "./Cart";
 
 const percentDiscount = (amount, cart) => {
-  return (amount / 100) * _calculateSubtotal(cart);
+  return (amount / 100) * calculateSubtotal(cart);
 };
 
 const shippingDiscount = (voucher, cart) => {
-  const subtotal = _calculateSubtotal(cart);
-  if (subtotal >= voucher.minValue) return _calculateShipping(cart);
+  const subtotal = calculateSubtotal(cart);
+  if (subtotal >= voucher.minValue) return calculateShipping(cart);
 };
 
 const Voucher = {
