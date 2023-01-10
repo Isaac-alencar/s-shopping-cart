@@ -22,8 +22,7 @@ const Container = styled.div`
   flex-direction: column;
   background-color: #efefef;
 
-  width: 12.5rem;
-  height: 20rem;
+  width: 100%;
   border-radius: 12px;
 `;
 
@@ -43,7 +42,7 @@ const Description = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 0.5rem;
-  margin-left: 1rem;
+  padding: 1rem;
 `;
 
 const Button = styled.button`

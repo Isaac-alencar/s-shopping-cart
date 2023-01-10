@@ -40,8 +40,9 @@ export const Avatar = styled.div`
 export const ProductList = styled.div`
   grid-area: products-list;
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(3, auto);
+  grid-template-columns: repeat(3, 12.5rem);
   gap: 1.5rem;
   padding: 3rem 2rem;
+
+  height: fit-content;
 `;
