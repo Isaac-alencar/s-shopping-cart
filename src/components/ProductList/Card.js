@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { Text } from "./Text";
+import { Text } from "../Text";
 
-export const ProductCard = (props) => {
+export const Card = (props) => {
   return (
     <Container>
       <Image>
